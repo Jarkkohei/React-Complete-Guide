@@ -78,12 +78,23 @@ class BurgerBuilder extends Component {
 
 
     render() {
+
+        //  Make a copy of the state.
+        const disabledInfo = {...this.state.ingredients};
+
+        //  Loop through the copied state.
+        for(let key in disabledInfo) {
+            //  If the count of the ingredient is 0 or less, set the count to "True".
+            disabledInfo[key] = disabledInfo[key] <= 0
+        }
+
         return(
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                     ingredientAdded={this.addIngredientHandler}
-                    ingredientRemoved={this.removeIngredientHandler}/>
+                    ingredientRemoved={this.removeIngredientHandler}
+                    disabled={disabledInfo}/>
             </Aux>
         );
     }
