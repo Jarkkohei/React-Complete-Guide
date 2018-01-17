@@ -13,6 +13,8 @@ const orderSummary = (props) => {
                         <span style={{textTransform: 'capitalize'}}>{igKey}</span>: {props.ingredients[igKey]}
                     </li>
                 );
+            } else {
+                return null;
             }
         });
 
