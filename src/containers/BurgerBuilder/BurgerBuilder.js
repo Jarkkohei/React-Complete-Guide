@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary';
 import Burger from './../../components/Burger/Burger';
 import BuildControls from './../../components/Burger/BuildControls/BuildControls';
+import Modal from './../../components/UI/Modal/Modal';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -31,6 +32,7 @@ class BurgerBuilder extends Component {
         purchasable: false
     }
 
+
     updatePurchaseState = (ingredients) => {
         //  Create an array of ingredients.
         const sum = Object.keys(ingredients)
@@ -46,6 +48,7 @@ class BurgerBuilder extends Component {
         //  Set "state.purchasable" to "True" or "False".
         this.setState({purchasable: sum > 0});
     }
+
 
     addIngredientHandler = (type) => {
         //  Update the count of an ingredient.
@@ -68,6 +71,7 @@ class BurgerBuilder extends Component {
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
         this.updatePurchaseState(updatedIngredients);
     }
+
 
     removeIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
@@ -109,6 +113,7 @@ class BurgerBuilder extends Component {
 
         return(
             <Aux>
+                <Modal />
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                     ingredientAdded={this.addIngredientHandler}
