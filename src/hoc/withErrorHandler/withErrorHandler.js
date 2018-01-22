@@ -14,9 +14,10 @@ const withErrorHandler = (WrappedComponent, axios) => {
             //  Clear the possible existing errors.
             axios.interceptors.request.use(req => {
                 this.setState({errors: null});
+                return req;
             });
             //  Set the state.error to the actual response error-object (including the message.property).
-            axios.interceptors.response.use(null, error => {
+            axios.interceptors.response.use(res => res, error => {
                 this.setState({error: error});
             });
         }
