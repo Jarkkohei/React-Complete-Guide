@@ -26,8 +26,8 @@ class Checkout extends Component {
             <div>
                 <CheckoutSummary 
                 ingredients={this.state.ingredients}
-                checkoutCancelled={}
-                checkoutContinued={}/>
+                checkoutCancelled={this.checkoutCancelledHandler}
+                checkoutContinued={this.checkoutContinuedHandler}/>
             </div>
         );
     }
