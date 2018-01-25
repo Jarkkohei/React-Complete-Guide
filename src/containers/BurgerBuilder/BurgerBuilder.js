@@ -122,7 +122,7 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
 
-        // this.setState({loading: true});
+        this.setState({loading: true});
 
         // //  !!! You should NOT calculate the price at the client-side.
         // const order = {
@@ -148,7 +148,22 @@ class BurgerBuilder extends Component {
         //     .catch(error => {
         //         this.setState({loading: false, purchasing: false});
         //     });
-        this.props.history.push('/checkout');
+
+        const queryParams = [];
+
+        for(let i in this.state.ingredients) {
+            //  Stringify every ingredient name and value together with the "=".sign in between. Eg. "salad=1"
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+        }
+
+        //  Join all the stringified ingredient name/value pairs together with the "&"-sign in between. Eg. "salad=1&meat=1&bacon=2&cheese=2" 
+        const queryString = queryParams.join('&');
+
+        //  Navigate to the "/checkout" with the queryParams.
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
 
 
