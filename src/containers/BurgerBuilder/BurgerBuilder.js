@@ -122,39 +122,15 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
 
-        this.setState({loading: true});
-
-        // //  !!! You should NOT calculate the price at the client-side.
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Pekka Virtanen',
-        //         address: {
-        //             street: 'Testikatu 1',
-        //             zipCode: '001155',
-        //             country: 'Finland'
-        //         },
-        //         email: 'texst@test.com'
-        //     },
-        //     deliveryMethod: 'fastest'
-        // }
-
-        // //  ".json" id required by the Firebase
-        // axios.post('/orders.json', order)
-        //     .then(response => {
-        //         this.setState({loading: false, purchasing: false});
-        //     })
-        //     .catch(error => {
-        //         this.setState({loading: false, purchasing: false});
-        //     });
-
         const queryParams = [];
 
         for(let i in this.state.ingredients) {
             //  Stringify every ingredient name and value together with the "=".sign in between. Eg. "salad=1"
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
+
+        //  Push the totalPrice to the queryParams.
+        queryParams.push('price=' + this.state.totalPrice);
 
         //  Join all the stringified ingredient name/value pairs together with the "&"-sign in between. Eg. "salad=1&meat=1&bacon=2&cheese=2" 
         const queryString = queryParams.join('&');
