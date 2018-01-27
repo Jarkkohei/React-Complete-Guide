@@ -69,10 +69,19 @@ class ContactData extends Component {
 
         this.setState({loading: true});
 
+        const formData = {};
+
+
+        for(let formElementIdentifier in this.state.orderForm) {
+            //  Create key/value-pairs with the "name"- and the "value" of the inputs.
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+        }
+
         //  !!! You should NOT calculate the price at the client-side.
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
+            orderData: formData
         }
 
         //  ".json" id required by the Firebase
@@ -118,7 +127,7 @@ class ContactData extends Component {
         }
 
         let form = (
-            <form>
+            <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
                     <Input 
                         key={formElement.id}
@@ -127,7 +136,7 @@ class ContactData extends Component {
                         value={formElement.config.value} 
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                 ))}
-                <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+                <Button btnType="Success">ORDER</Button>
             </form>
         );
         if(this.state.loading) {
