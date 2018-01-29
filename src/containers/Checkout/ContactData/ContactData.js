@@ -84,7 +84,8 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'},
                     ]
                 },
-                value: ''
+                value: '',
+                valid: true
             }
         },
         loading: false,
@@ -173,7 +174,7 @@ class ContactData extends Component {
             //  If the form was already valid and the current input is valid, set the form to be "valid".
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
-
+        //console.log(formIsValid);
 
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
@@ -205,7 +206,7 @@ class ContactData extends Component {
                         touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                 ))}
-                <Button btnType="Success">ORDER</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if(this.state.loading) {
