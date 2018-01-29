@@ -87,7 +87,8 @@ class ContactData extends Component {
                 value: ''
             }
         },
-        loading: false
+        loading: false,
+        formIsValid: false
     }
 
 
@@ -165,8 +166,16 @@ class ContactData extends Component {
         updatedFormElement.touched = true;
 
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        console.log(updatedFormElement);
-        this.setState({orderForm: updatedOrderForm});
+        
+        //  Check if all the inputs are valid (= form is valid).
+        let formIsValid = true;
+        for(let inputIdentifier in updatedOrderForm) {
+            //  If the form was already valid and the current input is valid, set the form to be "valid".
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+
+
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
 
 
