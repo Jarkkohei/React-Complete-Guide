@@ -6,7 +6,8 @@ const input = (props) => {
     let inputElement = null;
     const inputClasses = [classes.InputElement];
 
-    if(props.invalid && props.shouldValidate) {
+    //  Only flag a input as "Invalid" if it is invalid, should be updated and is touched (not "all red" by default).
+    if(props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push(classes.Invalid);
     }
 
