@@ -85,6 +85,7 @@ class ContactData extends Component {
                     ]
                 },
                 value: 'fastest',
+                validation: {},
                 valid: true
             }
         },
@@ -127,6 +128,11 @@ class ContactData extends Component {
 
     checkValidity(value, rules) { 
         let isValid = true;
+
+        //  This is not really needed since we added the "validation"-property (an empty object) for the "deliveryMethod"-property.
+        if(!rules) {
+            return true;
+        }
 
         //  Not empty
         if(rules.required) {
