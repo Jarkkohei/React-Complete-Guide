@@ -48,11 +48,19 @@ const input = (props) => {
                 onChange={props.changed}/>;
     }
 
+    //  Show error messages.
+    let validationError = null;
+    if (props.invalid && props.touched) {
+        validationError = <p className={classes.ValidationError}>Please enter {props.elementConfig.placeholder}</p>;
+        //validationError = <p>{props.errorMessage}</p>;
+    }
+
 
     return(
         <div className={classes.Input}>
             <label className={classes.Label}>{props.label}</label>
             {inputElement}
+            {validationError}
         </div>
     );
 };
