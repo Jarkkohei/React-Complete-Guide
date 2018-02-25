@@ -62,25 +62,8 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-
-        const queryParams = [];
-
-        for(let i in this.state.ingredients) {
-            //  Stringify every ingredient name and value together with the "=".sign in between. Eg. "salad=1"
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
-        }
-
-        //  Push the totalPrice to the queryParams.
-        queryParams.push('price=' + this.state.totalPrice);
-
-        //  Join all the stringified ingredient name/value pairs together with the "&"-sign in between. Eg. "salad=1&meat=1&bacon=2&cheese=2" 
-        const queryString = queryParams.join('&');
-
         //  Navigate to the "/checkout" with the queryParams.
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        });
+        this.props.history.push('/checkout');
     }
 
 
