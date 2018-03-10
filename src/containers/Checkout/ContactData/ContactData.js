@@ -114,16 +114,6 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
-
-        //  ".json" id required by the Firebase
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({loading: false});
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                this.setState({loading: false});
-            });
     }
 
 
