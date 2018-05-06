@@ -60,7 +60,7 @@ export const auth = (email, password, isSignup) => {
             .then(response => {
                 console.log(response);
                 //  Get the current date and time and calculate the expirationDate.
-                const expirationDate = new Date(new Date().getTime()) + response.data.expiresIn * 1000;
+                const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
 
                 localStorage.setItem('token', response.data.idToken);
                 localStorage.setItem('expirationDate', expirationDate);
@@ -91,13 +91,13 @@ export const authCheckState = () => {
         } else {
             //  Get expirationDate from the localStorage as a string and convert it to a Date-object.
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if(expirationDate < new Date()) {
+            if(expirationDate <= new Date()) {
                 dispatch(logout());
             } else {
                 const userId = localStorage.getItem('userId');
                 dispatch(authSuccess(token, userId));
-                //  Use getSeconds-method to convert Date-objects to seconds.
-                dispatch(checkAuthTimeout(expirationDate.getSeconds() - new Date().getSeconds()));
+                //  Use getTime-method to convert Date-objects to milliseconds and then to seconds.
+                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
             }
         }
     };
