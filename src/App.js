@@ -8,7 +8,6 @@ import Checkout from './containers/Checkout/Checkout';
 import Orders from './containers/Orders/Orders';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
-import { authCheckState } from './store/actions/auth';
 import * as actions from './store/actions/index';
 
 class App extends Component {

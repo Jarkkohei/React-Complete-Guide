@@ -18,8 +18,6 @@ const burger = (props) => {
         .reduce((arr, element) => {
             return arr.concat(element)
         }, []);
-
-    //console.log(transformedIngredients);
     
     //  If no ingredient are choosed, show text "Please choose ingredients" in place of ingredients.
     if(transformedIngredients.length === 0) {
