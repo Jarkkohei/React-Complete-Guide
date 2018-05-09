@@ -7,7 +7,7 @@ import Button from '../../components/UI/Button/Button';
 import Spinner from './../../components/UI/Spinner/Spinner';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
-import { updateObject } from './../../shared/utility';
+import { updateObject, checkValidity } from './../../shared/utility';
 
 class Auth extends Component {
 
@@ -51,37 +51,11 @@ class Auth extends Component {
         }
     }
 
-    checkValidity(value, rules) { 
-        let isValid = true;
-
-        //  This is not really needed since we added the "validation"-property (an empty object) for the "deliveryMethod"-property.
-        if(!rules) {
-            return true;
-        }
-
-        //  Not empty
-        if(rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        //  Minimum length
-        if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid; 
-        }
-
-        //  Maximum length
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-
-        return isValid;
-    }
-
     inputChangedHandler = (event, controlName) => {
         const updatedControls = updateObject(this.state.controls, {
             [controlName]: updateObject(this.state.controls[controlName], {
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
                 touched: true
             })
         });
