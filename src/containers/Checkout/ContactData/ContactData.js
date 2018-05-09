@@ -9,6 +9,7 @@ import Input from './../../../components/UI/Input/Input';
 import withErrorHandler from './../../../hoc/withErrorHandler/withErrorHandler';
 //import { purchaseBurgerStart } from '../../../store/actions/order';
 import * as actions from './../../../store/actions/index';
+import { updateObject } from './../../../shared/utility';
 
 
 class ContactData extends Component {
@@ -148,25 +149,16 @@ class ContactData extends Component {
 
 
     inputChangedHandler = (event, inputIdentifier) => {
-        //  Make a copy of the state. (This only really copies the first step properties!!!)
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        }
-
         //  Make a copy of the next step properties. (Next step id not needed because we only need the "value" property!!!)
-        const updatedFormElement = {
-            ...updatedOrderForm[inputIdentifier]
-        };
+        const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            touched: true
+        });
 
-        updatedFormElement.value = event.target.value;
-
-        //  Check the validity of the input element value and store the result to valid-property.
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-
-        //  Since we are here we know that A input has been changed, so we set the "touched" to be "true".
-        updatedFormElement.touched = true;
-
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: updatedFormElement
+        });
         
         //  Check if all the inputs are valid (= form is valid).
         let formIsValid = true;
