@@ -36,13 +36,7 @@ export const fetchIngredientsFailed = () => {
 
 //  Asyncronous action using syncronous actions
 export const initIngredients = () => {
-    return dispatch => {
-        axios.get('https://react-my-burger-899db.firebaseio.com/ingredients.json')
-            .then(response => {
-                dispatch(setIngredients(response.data));
-            })
-            .catch(error => {
-                dispatch(fetchIngredientsFailed());
-            });
+    return {
+        type: actionTypes.INIT_INGREDIENTS
     };
 };
