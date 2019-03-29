@@ -18,7 +18,7 @@ export function* checkAuthTimeoutSaga(action) {
 }
 
 export function* authUserSaga(action) {
-    yield pu(actions.authStart());
+    yield put(actions.authStart());
     dispatch(authStart());
 
     const authData = {
