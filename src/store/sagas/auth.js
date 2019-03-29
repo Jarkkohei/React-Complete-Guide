@@ -46,3 +46,21 @@ export function* authUserSaga(action) {
         yield put(actions.authFail(error.response.data.error));
     }
 }
+
+export function* authCheckStateSaga(action) {
+    const token = yield localStorage.getItem('token');
+    if (!token) {
+        yield put(actions.logout());
+    } else {
+        //  Get expirationDate from the localStorage as a string and convert it to a Date-object.
+        const expirationDate = yield new Date(localStorage.getItem('expirationDate'));
+        if (expirationDate <= new Date()) {
+            yield put(actions.logout());
+        } else {
+            const userId = yield localStorage.getItem('userId');
+            yield put(actions.authSuccess(token, userId));
+            //  Use getTime-method to convert Date-objects to milliseconds and then to seconds.
+            yield put(actions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+        }
+    }
+}
