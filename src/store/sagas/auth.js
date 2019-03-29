@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga';
-import { put } from 'redux-saga/effects';
+import { put, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
 import * as actions from '../actions/index';
@@ -19,7 +18,7 @@ export function* checkAuthTimeoutSaga(action) {
 
 export function* authUserSaga(action) {
     yield put(actions.authStart());
-    dispatch(authStart());
+    yield put(actions.authStart());
 
     const authData = {
         email: action.email,

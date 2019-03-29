@@ -11,6 +11,7 @@ export {
     purchaseInit,
     fetchOrders,
     purchaseBurgerStart,
+    purchaseBurgerSuccess,
     purchaseBurgerFail,
     fetchOrdersStart,
     fetchOrdersSuccess,
