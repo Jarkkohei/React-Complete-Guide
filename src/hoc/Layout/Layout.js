@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import classes from './Layout.css';
@@ -6,42 +6,33 @@ import Aux from './../Auxiliary/Auxiliary';
 import Toolbar from './../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from './../../components/Navigation/SideDrawer/SideDrawer';
 
-class Layout extends Component {
+const layout = props => {
 
-    state = {
-        showSideDrawer: false
-    }
+    const [sideDraverIsVisible, setSideDraverIsVisible] =  useState(false);
 
-    sideDrawerClosedHandler = () => {
-        this.setState({showSideDrawer: false});
+    const sideDrawerClosedHandler = () => {
+        setSideDraverIsVisible(false);
     }
 
     //  Assyncronously handling the state.
-    sideDrawerToggleHandler = () => {
-        //  Get the previous state...
-        this.setState((prevState) => {
-            //  ...and make the comparison (!) with it 
-            //  instead of trying to access the state directly.
-            return {showSideDrawer: !prevState.showSideDrawer};
-        });
+    const sideDrawerToggleHandler = () => {
+        setSideDraverIsVisible(!sideDraverIsVisible);
     }
 
-    render() {
-        return(
-        <Aux>
-            <Toolbar 
-                isAuth={this.props.isAuthenticated}
-                drawerToggleClicked={this.sideDrawerToggleHandler}/>
-            <SideDrawer 
-                isAuth={this.props.isAuthenticated}
-                open={this.state.showSideDrawer} 
-                closed={this.sideDrawerClosedHandler}/>
-            <main className={classes.Content}>
-                {this.props.children}
-            </main>
-        </Aux>
-        );
-    }
+    return(
+    <Aux>
+        <Toolbar 
+            isAuth={props.isAuthenticated}
+            drawerToggleClicked={sideDrawerToggleHandler}/>
+        <SideDrawer 
+            isAuth={props.isAuthenticated}
+            open={sideDraverIsVisible} 
+            closed={sideDrawerClosedHandler}/>
+        <main className={classes.Content}>
+            {props.children}
+        </main>
+    </Aux>
+    );
 }
 
 const mapStateToProps = state => {
@@ -50,4 +41,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(layout);
